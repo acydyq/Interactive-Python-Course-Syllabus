@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mastering Python Programming – Interactive Syllabus (Colab Edition)</title>
+  <style>
+    /* Base resets and font styling */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      background: var(--bg-main);
+      color: var(--text-color);
+      transition: background 0.3s, color 0.3s;
+      overflow-y: scroll;
+    }
+    body.dark {
+      --bg-main: #343541;
+      --bg-sidebar: #202123;
+      --bg-content: #343541;
+      --bg-bubble: #444654;
+      --text-color: #ececf1;
+      --link-color: #8ab4f8;
+      --border-color: #2b2c2f;
+      --code-bg: #2b2d31;
+      --code-text: #f2f2f2;
+      --input-bg: #40414f;
+    }
+    body.light {
+      --bg-main: #F7F7F8;
+      --bg-sidebar: #FFFFFF;
+      --bg-content: #FFFFFF;
+      --bg-bubble: #F0F0F5;
+      --text-color: #202123;
+      --link-color: #1a7f8e;
+      --border-color: #e5e7eb;
+      --code-bg: #f5f5f5;
+      --code-text: #333333;
+      --input-bg: #FFFFFF;
+    }
+    a { color: var(--link-color); text-decoration: underline; }
+    a:hover { text-decoration: none; }
+
+    /* Sidebar Navigation (ChatGPT-style) */
+    #menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 260px;
+      background: var(--bg-sidebar);
+      color: var(--text-color);
+      border-right: 1px solid var(--border-color);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+    }
+    #menu h2 {
+      text-align: center;
+      padding: 16px 0;
+      font-size: 1.1em;
+      border-bottom: 1px solid var(--border-color);
+    }
+    #menu ul { list-style: none; padding: 0; margin: 0; }
+    #menu li a {
+      display: block;
+      padding: 8px 16px;
+      color: var(--text-color);
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+    #menu li a:hover { background: rgba(0,0,0,0.05); }
+    .sidebar-bottom {
+      margin-top: auto;
+      padding: 16px;
+      text-align: center;
+      border-top: 1px solid var(--border-color);
+    }
+    #theme-toggle {
+      background: none;
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
+      padding: 6px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    /* Topbar for mobile */
+    #topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50px;
+      background: var(--bg-sidebar);
+      color: var(--text-color);
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      z-index: 150;
+    }
+    #menu-btn {
+      background: none;
+      border: none;
+      color: var(--text-color);
+      font-size: 1.2em;
+      cursor: pointer;
+    }
+    #top-title { flex: 1; text-align: center; font-weight: bold; }
+    @media(min-width: 769px) {
+      #menu-btn, #top-title { display: none; }
+    }
+    @media(max-width: 768px) {
+      #menu { top: 50px; left: -260px; transition: left 0.3s; }
+      body.menu-open #menu { left: 0; }
+    }
+
+    /* Main Content (Syllabus as Chat Bubbles) */
+    #content {
+      margin-left: 260px;
+      padding: 20px;
+      margin-top: 50px;
+    }
+    @media(max-width: 768px) { #content { margin: 60px 10px 10px 10px; } }
+    .message {
+      background: var(--bg-bubble);
+      border-radius: 8px;
+      padding: 12px;
+      margin: 10px 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .message.user { align-self: flex-end; background: var(--bg-user); }
+    .message.assistant { align-self: flex-start; }
+    pre, code {
+      background: var(--code-bg);
+      color: var(--code-text);
+      font-family: "Courier New", Courier, monospace;
+    }
+    pre {
+      padding: 8px;
+      border-radius: 5px;
+      overflow-x: auto;
+      margin: 10px 0;
+    }
+    code {
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="dark">
+  <!-- Sidebar Navigation -->
+  <nav id="menu">
+    <h2>PYTHON MASTERY</h2>
+    <ul>
+      <li><a href="#introduction">Introduction</a></li>
+      <li><a href="#colab-setup">Colab Setup Guide</a></li>
+      <li><a href="#week1">Week 1: Introduction to Python</a></li>
+      <li><a href="#week2">Week 2: Data Types &amp; Variables</a></li>
+      <li><a href="#week3">Week 3: Control Flow</a></li>
+      <li><a href="#week4">Week 4: Functions</a></li>
+      <li><a href="#week5">Week 5: Data Structures</a></li>
+      <li><a href="#week6">Week 6: Object-Oriented Programming</a></li>
+      <li><a href="#week7">Week 7: Advanced Python Concepts</a></li>
+      <li><a href="#week8">Week 8: Working with External Data</a></li>
+      <li><a href="#week9">Week 9: Data Analysis with Pandas</a></li>
+      <li><a href="#week10">Week 10: Data Visualization</a></li>
+      <li><a href="#week11">Week 11: Introduction to Machine Learning</a></li>
+      <li><a href="#week12">Week 12: Capstone Project</a></li>
+    </ul>
+    <div class="sidebar-bottom">
+      <button id="theme-toggle">Light mode 🌞</button>
+    </div>
+  </nav>
+
+  <!-- Topbar for mobile -->
+  <div id="topbar">
+    <button id="menu-btn">☰</button>
+    <span id="top-title">Python Syllabus</span>
+  </div>
+
+  <!-- Main Content (Syllabus as Chat-Style Bubbles) -->
+  <div id="content">
+    <div id="introduction" class="message assistant">
+      <h1>Mastering Python Programming – Interactive Syllabus</h1>
+      <p>Welcome to the <em>Mastering Python</em> interactive syllabus. This course is structured into weekly modules that will guide you from Python basics to advanced concepts using Google Colab for interactive coding. The syllabus is presented in a chat-like format to enhance your learning experience.</p>
+      <ul>
+        <li>Interactive coding via embedded Google Colab notebook links.</li>
+        <li>ChatGPT‑style UI with a light/dark mode toggle.</li>
+      </ul>
+    </div>
+
+    <div id="colab-setup" class="message assistant">
+      <h2>Colab Setup Guide</h2>
+      <p>This guide will help you configure and make the most of Google Colab for Python development. Follow these steps to get started:</p>
+      <ul>
+        <li>Visit <a href="https://colab.research.google.com" target="_blank" rel="noopener noreferrer">colab.research.google.com</a> and sign in with your Google account.</li>
+        <li>Create a new notebook via <strong>File &rarr; New Notebook</strong>.</li>
+        <li>Rename your notebook – it will be saved automatically in your Google Drive under “Colab Notebooks”.</li>
+        <li>Write and run code cells (e.g., <code>print("Hello, Python!")</code>) to see the output.</li>
+      </ul>
+    </div>
+
+    <div id="week1" class="message assistant">
+      <h2>Week 1: Introduction to Python</h2>
+      <p><em>Overview:</em> Get started with Python and learn to run your first programs in Colab.</p>
+      <ul>
+        <li><strong>Python &amp; Colab Basics:</strong> <a href="https://colab.research.google.com/github/mrArpanM/learn-python/blob/main/01_ColabNotebook.ipynb" target="_blank" rel="noopener noreferrer">Colab Notebook</a></li>
+        <li><strong>Python Syntax &amp; Hello World:</strong> <a href="https://colab.research.google.com/github/mrArpanM/learn-python/blob/main/00_Introduction.ipynb" target="_blank" rel="noopener noreferrer">Colab Notebook</a></li>
+        <li><strong>Notebook Features:</strong> <a href="https://colab.research.google.com/notebooks/basic_features_overview.ipynb" target="_blank" rel="noopener noreferrer">Overview Notebook</a></li>
+      </ul>
+    </div>
+
+    <div id="week2" class="message assistant">
+      <h2>Week 2: Data Types &amp; Variables</h2>
+      <p><em>Overview:</em> Learn the fundamentals of data types and variable assignment in Python.</p>
+      <ul>
+        <li><strong>Variables and Assignment:</strong> <a href="https://colab.research.google.com/github/mrArpanM/learn-python/blob/main/02_Variables.ipynb" target="_blank" rel="noopener noreferrer">Colab Notebook</a></li>
+        <li><strong>Data Types:</strong> <a href="https://colab.research.google.com/github/mrArpanM/learn-python/blob/main/03_DataTypes.ipynb" target="_blank" rel="noopener noreferrer">Colab Notebook</a></li>
+      </ul>
+    </div>
+
+    <div id="week3" class="message assistant">
+      <h2>Week 3: Control Flow</h2>
+      <p><em>Overview:</em> Master the use of conditionals and loops to control program flow in Python.</p>
+      <ul>
+        <li><strong>Conditional Statements:</strong> <a href="https://colab.research.google.com/github/mrArpanM/learn-python/blob/main/05_Conditionals.ipynb" target="_blank" rel="noopener noreferrer">Colab Notebook</a></li>
+        <li><strong>Loops:</strong> <a href="https://colab.research.google.com/github/mrArpanM/learn-python/blob/main/06_Loops.ipynb" target="_blank" rel="noopener noreferrer">Colab Notebook</a></li>
+      </ul>
+    </div>
+
+    <div id="week4" class="message assistant">
+      <h2>Week 4: Functions</h2>
+      <p><em>Overview:</em> Learn how to write reusable code by defining functions with parameters and return values.</p>
+      <ul>
+        <li><strong>Defining Functions:</strong> <a href="https://colab.research.google.com/github/mrArpanM/learn-python/blob/main/08_Functions.ipynb" target="_blank" rel="noopener noreferrer">Colab Notebook</a></li>
+        <li><strong>Parameters &amp; Return Values:</strong> <a href="https://colab.research.google.com/github/mrArpanM/learn-python/blob/main/09_FunctionParameters.ipynb" target="_blank" rel="noopener noreferrer">Colab Notebook</a></li>
+      </ul>
+    </div>
+
+    <div id="week5" class="message assistant">
+      <h2>Week 5: Data Structures</h2>
+      <p><em>Overview:</em> Dive into lists, tuples, dictionaries, and sets to learn how to store and manage data in Python.</p>
+      <ul>
+        <li><strong>Lists &amp; Tuples:</strong> <a href="https://colab.research.google.com/github/mrArpanM/learn-python/blob/main/11_ListsTuples.ipynb" target="_blank" rel="noopener noreferrer">Colab Notebook</a></li>
+        <li><strong>Dictionaries:</strong> <a href="https://colab.research.google.com/github/mrArpanM/learn-python/blob/main/12_Dictionaries.ipynb" target="_blank" rel="noopener noreferrer">Colab Notebook</a></li>
+        <li><strong>Sets:</strong> <a href="https://colab.research.google.com/github/mrArpanM/learn-python/blob/main/13_Sets.ipynb" target="_blank" rel="noopener noreferrer">Colab Notebook</a></li>
+      </ul>
+    </div>
+
+    <div id="week6" class="message assistant">
+      <h2>Week 6: Object-Oriented Programming</h2>
+      <p><em>Overview:</em> Learn how to define classes, create objects, and use inheritance to build modular Python programs.</p>
+      <ul>
+        <li><strong>Defining Classes:</strong> <a href="https://colab.research.google.com/github/mrArpanM/learn-python/blob/main/14_Classes.ipynb" target="_blank" rel="noopener noreferrer">Colab Notebook</a></li>
+        <li><strong>Methods and Self:</strong> <a href="https://colab.research.google.com/drive/1xWZ0Me3UFuuM_jmbYE6VRTN2PnDMNFk9" target="_blank" rel="noopener noreferrer">Colab Notebook: Methods Demo</a></li>
+        <li><strong>Inheritance:</strong> <a href="https://colab.research.google.com/github/mrArpanM/learn-python/blob/main/16_Inheritance.ipynb" target="_blank" rel="noopener noreferrer">Colab Notebook</a></li>
+      </ul>
+    </div>
+
+    <div id="week7" class="message assistant">
+      <h2>Week 7: Advanced Python Concepts</h2>
+      <p><em>Overview:</em> Explore modules, file I/O, and error handling to build robust Python programs.</p>
+      <ul>
+        <li><strong>Modules and Imports:</strong> <a href="https://colab.research.google.com/github/mrArpanM/learn-python/blob/main/17_Modules.ipynb" target="_blank" rel="noopener noreferrer">Colab Notebook</a></li>
+        <li><strong>File I/O:</strong> <a href="https://colab.research.google.com/github/mrArpanM/learn-python/blob/main/18_FileIO.ipynb" target="_blank" rel="noopener noreferrer">Colab Notebook</a></li>
+        <li><strong>Error Handling:</strong> <a href="https://colab.research.google.com/github/mrArpanM/learn-python/blob/main/19_Exceptions.ipynb" target="_blank" rel="noopener noreferrer">Colab Notebook</a></li>
+      </ul>
+    </div>
+
+    <div id="week8" class="message assistant">
+      <h2>Week 8: Working with External Data</h2>
+      <p><em>Overview:</em> Learn to work with data from CSV files, web APIs, and (optionally) web scraping to integrate real-world data into your programs.</p>
+      <ul>
+        <li><strong>CSV Handling:</strong> <a href="https://colab.research.google.com/github/mrArpanM/learn-python/blob/main/20_CSV.ipynb" target="_blank" rel="noopener noreferrer">Colab Notebook</a></li>
+        <li><strong>APIs and JSON:</strong> <a href="https://colab.research.google.com/github/mrArpanM/learn-python/blob/main/21_APIs.ipynb" target="_blank" rel="noopener noreferrer">Colab Notebook</a></li>
+        <li><strong>Web Scraping (Optional):</strong> <a href="https://colab.research.google.com/github/mrArpanM/learn-python/blob/main/22_WebScraping.ipynb" target="_blank" rel="noopener noreferrer">Colab Notebook</a></li>
+      </ul>
+    </div>
+
+    <div id="week9" class="message assistant">
+      <h2>Week 9: Data Analysis with Pandas</h2>
+      <p><em>Overview:</em> Use pandas to load, manipulate, and analyze datasets. Learn to filter, group, and summarize data to extract meaningful insights.</p>
+      <ul>
+        <li><strong>Pandas Basics:</strong> <a href="https://colab.research.google.com/github/mrArpanM/learn-python/blob/main/23_PandasIntro.ipynb" target="_blank" rel="noopener noreferrer">Colab Notebook</a></li>
+        <li><strong>Filtering and Sorting:</strong> <a href="https://colab.research.google.com/github/mrArpanM/learn-python/blob/main/24_PandasFilteringSorting.ipynb" target="_blank" rel="noopener noreferrer">Colab Notebook</a></li>
+        <li><strong>Grouping and Aggregation:</strong> <a href="https://colab.research.google.com/github/mrArpanM/learn-python/blob/main/25_PandasGroupBy.ipynb" target="_blank" rel="noopener noreferrer">Colab Notebook</a></li>
+      </ul>
+    </div>
+
+    <div id="week10" class="message assistant">
+      <h2>Week 10: Data Visualization</h2>
+      <p><em>Overview:</em> Learn to visualize data using libraries like matplotlib (and optionally seaborn) to create charts that reveal trends and insights.</p>
+      <ul>
+        <li><strong>Matplotlib Basics:</strong> <a href="https://colab.research.google.com/github/mrArpanM/learn-python/blob/main/26_MatplotlibBasics.ipynb" target="_blank" rel="noopener noreferrer">Colab Notebook</a></li>
+        <li><strong>Common Chart Types:</strong> <a href="https://colab.research.google.com/github/mrArpanM/learn-python/blob/main/27_CommonCharts.ipynb" target="_blank" rel="noopener noreferrer">Colab Notebook</a></li>
+        <li><strong>Customizing Plots:</strong> <a href="https://colab.research.google.com/github/mrArpanM/learn-python/blob/main/28_CustomizingPlots.ipynb" target="_blank" rel="noopener noreferrer">Colab Notebook</a></li>
+      </ul>
+    </div>
+
+    <div id="week11" class="message assistant">
+      <h2>Week 11: Introduction to Machine Learning</h2>
+      <p><em>Overview:</em> Get a gentle introduction to machine learning using scikit-learn. Learn about data splitting, training a simple model, and evaluating its performance.</p>
+      <ul>
+        <li><strong>ML Concepts:</strong> <a href="https://scikit-learn.org/stable/tutorial/basic/tutorial.html" target="_blank" rel="noopener noreferrer">sklearn Tutorial</a></li>
+        <li><strong>Simple ML Model:</strong> <a href="https://colab.research.google.com/github/mrArpanM/learn-python/blob/main/29_SimpleML.ipynb" target="_blank" rel="noopener noreferrer">Colab Notebook</a></li>
+        <li><strong>Evaluation Metrics:</strong> <a href="https://colab.research.google.com/github/google/eng-edu/blob/master/ml/cc/exercises/evaluation_metrics.ipynb" target="_blank" rel="noopener noreferrer">Colab Notebook: Metrics</a></li>
+      </ul>
+    </div>
+
+    <div id="week12" class="message assistant">
+      <h2>Week 12: Capstone Project</h2>
+      <p><em>Overview:</em> In your final week, combine everything you've learned to build a substantial Python project. Choose an area—data science, automation, machine learning, or web development—and create a shareable Colab notebook documenting your work.</p>
+      <ul>
+        <li><strong>Data Science Template:</strong> <a href="https://colab.research.google.com/github/ybifoundation/Data-Science-Project-Template/blob/main/Data_Science_Project_Template.ipynb" target="_blank" rel="noopener noreferrer">Colab Notebook: Project Template</a></li>
+        <li><strong>Web App/Automation Ideas:</strong> <a href="https://colab.research.google.com/github/InitiateAI/Flask_on_Colab/blob/main/Flask_on_Colab.ipynb" target="_blank" rel="noopener noreferrer">Colab Notebook: Flask on Colab</a></li>
+        <li><strong>ML Application Example:</strong> <a href="https://colab.research.google.com/github/fchollet/deep-learning-with-python-notebooks/blob/master/chapter08-deep-learning-for-text.ipynb" target="_blank" rel="noopener noreferrer">Colab Notebook: Text Classification</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    // --- Sidebar and Topbar Functionality ---
+    const menuBtn = document.getElementById('menu-btn');
+    const overlay = document.getElementById('overlay');
+    menuBtn && menuBtn.addEventListener('click', () => {
+      document.body.classList.add('menu-open');
+    });
+    overlay && overlay.addEventListener('click', () => {
+      document.body.classList.remove('menu-open');
+    });
+
+    // --- Theme Toggle ---
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    themeToggleBtn.addEventListener('click', () => {
+      if(document.body.classList.contains('dark')) {
+        document.body.classList.replace('dark','light');
+        themeToggleBtn.textContent = 'Dark mode 🌙';
+      } else {
+        document.body.classList.replace('light','dark');
+        themeToggleBtn.textContent = 'Light mode 🌞';
+      }
+    });
+  </script>
+</body>
+</html>
